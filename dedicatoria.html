@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Una dedicatoria de flores amarillas</title>
+  <meta name="description" content="Un regalo de flores amarillas para el 21 de marzo.">
+  <meta name="theme-color" content="#12283C">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌼%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="flores.js" defer></script>
+  <script src="dedicatoria.js" defer></script>
+</head>
+<body class="pagina-dedicatoria">
+
+  <main class="escena" id="escena">
+    <!-- Cielo en capas: antes del amanecer + amanecer cálido -->
+    <div class="cielo" aria-hidden="true"></div>
+    <div class="cielo cielo--calido" aria-hidden="true"></div>
+    <div class="estrellas" id="estrellas" aria-hidden="true"></div>
+    <div class="resplandor" aria-hidden="true"></div>
+    <div class="sol" aria-hidden="true"></div>
+
+    <!-- Prado (lo siembra flores.js) -->
+    <div class="prado" id="prado" aria-hidden="true"></div>
+    <canvas class="polen" id="polen" aria-hidden="true"></canvas>
+
+    <!-- 1) El regalo cerrado -->
+    <div class="sobre" id="sobre">
+      <p class="sobre__linea">Un regalo de flores amarillas para</p>
+      <p class="sobre__nombre" id="sobre-nombre"></p>
+      <button class="boton boton--abrir" type="button" id="abrir">
+        <span class="boton__flor" aria-hidden="true">🌼</span>
+        Abrir el regalo
+      </button>
+      <p class="sobre__pista">21 de marzo · Día de las flores amarillas</p>
+    </div>
+
+    <!-- 2) La dedicatoria (aparece al abrir) -->
+    <article class="carta" id="carta" hidden>
+      <p class="carta__para" id="carta-para">Para</p>
+      <h1 class="carta__nombre" id="carta-nombre"></h1>
+
+      <div class="carta__sello" aria-hidden="true">
+        <svg viewBox="0 0 120 24" width="120" height="24">
+          <line x1="4" y1="12" x2="46" y2="12"></line>
+          <path d="M60 4 C 66 8, 66 16, 60 20 C 54 16, 54 8, 60 4Z" class="sello-petalo"></path>
+          <path d="M60 4 C 54 8, 54 16, 60 20 C 66 16, 66 8, 60 4Z" class="sello-petalo" transform="rotate(90 60 12)"></path>
+          <circle cx="60" cy="12" r="3" class="sello-centro"></circle>
+          <line x1="74" y1="12" x2="116" y2="12"></line>
+        </svg>
+      </div>
+
+      <p class="carta__mensaje" id="carta-mensaje"></p>
+
+      <p class="carta__firma" id="carta-firma" hidden>
+        <span class="carta__firma-etiqueta">con cariño,</span>
+        <span class="carta__firma-nombre" id="carta-de"></span>
+      </p>
+    </article>
+
+    <!-- 3) Si el enlace llega vacío -->
+    <div class="vacio" id="vacio" hidden>
+      <p class="vacio__flor" aria-hidden="true">🌼</p>
+      <h1>Aquí florece una dedicatoria</h1>
+      <p>Este enlace todavía no lleva un mensaje. Crea el tuyo y regálale flores amarillas a quien quieras.</p>
+      <a class="boton" href="index.html">Crear una dedicatoria</a>
+    </div>
+
+    <!-- Enlace discreto para crear la propia (aparece al abrir) -->
+    <a class="crear-tuya" id="crear-tuya" href="index.html" hidden>Crear tu propia dedicatoria</a>
+  </main>
+
+</body>
+</html>
