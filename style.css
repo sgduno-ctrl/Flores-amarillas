@@ -21,6 +21,8 @@
   --hoja-oscura: #1C5A46;
   --hoja: #35946A;
   --tallo: #2F7D5B;
+  --pradera-1: #2A5140;
+  --pradera-2: #163229;
 
   --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
   --mano: 'Caveat', 'Segoe Script', cursive;
@@ -161,6 +163,12 @@ h1, h2, h3 { font-weight: 500; line-height: 1.05; text-wrap: balance; margin: 0;
 .prado { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .polen { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; pointer-events: none; }
 
+/* Suelo: dos lomas suaves para que las flores queden plantadas */
+.suelo { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; height: clamp(96px, 17svh, 190px); pointer-events: none; }
+.suelo::before, .suelo::after { content: ''; position: absolute; left: -4%; right: -4%; bottom: 0; }
+.suelo::before { height: 100%; background: var(--pradera-1); border-radius: 50% 50% 0 0 / 120px 120px 0 0; }
+.suelo::after  { height: 72%; background: var(--pradera-2); border-radius: 50% 50% 0 0 / 90px 90px 0 0; }
+
 /* =====================================================
    FLORES
    ===================================================== */
@@ -171,12 +179,12 @@ h1, h2, h3 { font-weight: 500; line-height: 1.05; text-wrap: balance; margin: 0;
   aspect-ratio: 200 / 420;
 }
 .prado .flor {
-  --h: min(56svh, 520px);
+  --h: min(44svh, 400px);
   position: absolute;
   bottom: 0;
   transform: translateX(-50%);
 }
-.prado .flor.lejos { filter: saturate(.8) brightness(.82); opacity: .92; }
+.prado .flor.lejos { filter: saturate(.82) brightness(.84); }
 
 .flor svg {
   display: block; width: 100%; height: 100%;
@@ -390,7 +398,12 @@ form .boton { justify-self: start; }
 .carta {
   position: relative; z-index: 5;
   display: grid; justify-items: center; gap: .2rem;
-  max-width: 40rem; padding: 0 .5rem;
+  max-width: 40rem; padding: 0 .5rem; margin-bottom: 9svh;
+}
+.carta::before {
+  content: ''; position: absolute; z-index: -1; inset: -6% -10% -4%;
+  background: radial-gradient(58% 52% at 50% 46%, rgba(9, 22, 32, .5), rgba(9, 22, 32, .22) 55%, transparent 80%);
+  filter: blur(8px);
 }
 .carta__para { margin: 0; font-family: var(--mano); font-size: clamp(1.5rem, 5vw, 2rem); color: var(--mantequilla); }
 .carta__nombre {
@@ -421,7 +434,10 @@ form .boton { justify-self: start; }
 .carta.entra .carta__sello   { animation-delay: .7s; }
 .carta.entra .carta__mensaje { animation-delay: .9s; }
 .carta.entra .carta__firma   { animation-delay: 1.3s; }
-@keyframes subir { from { opacity: 0; transform: translateY(16px); filter: blur(4px); } }
+@keyframes subir {
+  from { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
 
 /* --- Estado vacío --- */
 .vacio { position: relative; z-index: 5; display: grid; justify-items: center; gap: 1rem; max-width: 32rem; }
