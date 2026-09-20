@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Día de las flores amarillas · 21 de marzo</title>
+  <meta name="description" content="Una página para regalar sol el 21 de marzo: planta flores amarillas y comparte una dedicatoria con quien quieras.">
+  <meta name="theme-color" content="#0B2530">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Día de las flores amarillas">
+  <meta property="og:description" content="Planta flores amarillas y regala una dedicatoria en un enlace.">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌼%3C/text%3E%3C/svg%3E">
+
+  <!-- Tipografías: Caprasimo para títulos, Figtree para el texto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Figtree:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ============ PORTADA: el jardín ============ -->
+  <header class="hero" id="inicio">
+    <div class="sol" aria-hidden="true"></div>
+
+    <svg class="colinas colinas--fondo" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 90 C 200 20, 420 130, 720 80 S 1240 10, 1440 90 V220 H0Z"/>
+    </svg>
+
+    <!-- Aquí el JavaScript siembra las flores -->
+    <div class="jardin" id="jardin" aria-hidden="true"></div>
+
+    <svg class="colinas colinas--frente" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 100 C 260 50, 500 130, 800 90 S 1240 50, 1440 100 V160 H0Z"/>
+    </svg>
+
+    <!-- Polen y pétalos flotando -->
+    <canvas class="polen" id="polen" aria-hidden="true"></canvas>
+
+    <div class="hero__texto">
+      <p class="hero__fecha">21 de marzo</p>
+      <h1><span class="linea">Día de las</span> <span class="linea">flores amarillas</span></h1>
+
+      <!-- Se muestra solo si el enlace trae una dedicatoria -->
+      <div class="dedicatoria" id="dedicatoria" hidden>
+        <p class="ded__para" id="ded-para"></p>
+        <p class="ded__msg" id="ded-msg"></p>
+        <p class="ded__de" id="ded-de"></p>
+      </div>
+
+      <div class="hero__acciones">
+        <a class="boton" href="#regalo">Regala una flor</a>
+        <button class="boton boton--suave" type="button" id="plantar">Planta una flor</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ POR QUÉ AMARILLO ============ -->
+    <section class="seccion porque" id="porque" aria-labelledby="t-porque">
+      <div class="contenedor">
+        <h2 id="t-porque">Un día para regalar sol</h2>
+        <div class="porque__texto">
+          <p>Cada 21 de marzo, mucha gente se regala flores amarillas. No hace falta un motivo grande: una flor, una tarjeta y ganas de decir «pensé en ti» son suficientes.</p>
+          <p>El amarillo es el color del sol, de la amistad y de los comienzos. Por eso sirve igual para una amiga, una abuela, un compañero de trabajo o alguien a quien quieres darle las gracias.</p>
+          <p>Esta página es tu flor digital: plántala, cámbiala y mándasela a quien quieras con un mensaje escrito por ti.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TRES FLORES ============ -->
+    <section class="seccion flores" id="flores" aria-labelledby="t-flores">
+      <div class="contenedor">
+        <h2 id="t-flores">Tres flores, tres maneras de decirlo</h2>
+
+        <ul class="flores__lista">
+          <li class="flores__item">
+            <button class="vitrina" type="button" data-vitrina="girasol" aria-label="Ver florecer el girasol otra vez"></button>
+            <h3>Girasol</h3>
+            <p>Alegría y constancia. Gira hacia la luz, así que se regala a quien te da ánimo.</p>
+          </li>
+          <li class="flores__item">
+            <button class="vitrina" type="button" data-vitrina="tulipan" aria-label="Ver florecer el tulipán otra vez"></button>
+            <h3>Tulipán</h3>
+            <p>Buen ánimo. Un tulipán amarillo es un deseo de días luminosos.</p>
+          </li>
+          <li class="flores__item">
+            <button class="vitrina" type="button" data-vitrina="margarita" aria-label="Ver florecer la margarita otra vez"></button>
+            <h3>Margarita</h3>
+            <p>Sencillez. La flor de los gestos pequeños que se recuerdan durante mucho tiempo.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ REGALA UNA FLOR ============ -->
+    <section class="seccion regalo" id="regalo" aria-labelledby="t-regalo">
+      <div class="contenedor">
+        <div class="regalo__intro">
+          <h2 id="t-regalo">Regala una flor amarilla</h2>
+          <p>Escribe una dedicatoria y crea un enlace. Quien lo abra verá el jardín florecer con tu mensaje.</p>
+        </div>
+
+        <div class="regalo__panel">
+          <form class="formulario" id="form-regalo" novalidate>
+            <div class="fila">
+              <div class="campo">
+                <label for="para">Para</label>
+                <input id="para" name="para" type="text" maxlength="40" autocomplete="off" placeholder="Ana">
+              </div>
+              <div class="campo">
+                <label for="de">De parte de</label>
+                <input id="de" name="de" type="text" maxlength="40" autocomplete="off" placeholder="Luis">
+              </div>
+            </div>
+
+            <div class="campo">
+              <label for="msg">Mensaje</label>
+              <textarea id="msg" name="msg" maxlength="160" placeholder="Gracias por hacer más luminosos mis días."></textarea>
+              <span class="contador" id="contador">0 / 160</span>
+            </div>
+
+            <fieldset class="campo">
+              <legend>La flor que más verá tu jardín</legend>
+              <div class="opciones">
+                <label class="opcion"><input type="radio" name="flor" value="girasol" checked><span>Girasol</span></label>
+                <label class="opcion"><input type="radio" name="flor" value="tulipan"><span>Tulipán</span></label>
+                <label class="opcion"><input type="radio" name="flor" value="margarita"><span>Margarita</span></label>
+              </div>
+            </fieldset>
+
+            <button class="boton" type="submit">Crear enlace</button>
+          </form>
+
+          <p class="estado" id="estado" role="status"></p>
+
+          <div class="resultado" id="resultado" hidden>
+            <label for="enlace">Tu enlace</label>
+            <input id="enlace" type="text" readonly>
+            <div class="acciones">
+              <button class="boton" type="button" id="copiar">Copiar enlace</button>
+              <button class="boton boton--suave" type="button" id="compartir" hidden>Compartir</button>
+              <button class="boton boton--suave" type="button" id="ver">Ver mi regalo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>Hecho con cariño para el 21 de marzo. Compártela con alguien que te ilumine el día.</p>
+  </footer>
+
+</body>
+</html>

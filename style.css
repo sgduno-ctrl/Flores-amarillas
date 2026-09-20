@@ -1,0 +1,526 @@
+/* =====================================================
+   Día de las flores amarillas
+   Paleta:
+   - noche     #0B2530  cielo antes del amanecer / texto
+   - bosque    #12403F  fondo del jardín
+   - girasol   #FFC629  amarillo principal
+   - mantequilla #FFE58A amarillo suave
+   - sol       #FFF3C4  fondo claro
+   - menta     #CDE9E1  fondo fresco para contrastar el amarillo
+   ===================================================== */
+
+:root {
+  --noche: #0B2530;
+  --bosque: #12403F;
+  --musgo: #1F5A44;
+  --colina-fondo: #15503F;
+  --colina-frente: #0D3A31;
+  --hoja: #55B67E;
+  --girasol: #FFC629;
+  --mantequilla: #FFE58A;
+  --sol: #FFF3C4;
+  --menta: #CDE9E1;
+  --texto-claro: #FFF6D8;
+
+  --fuente-titulo: 'Caprasimo', Georgia, 'Times New Roman', serif;
+  --fuente-texto: 'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente-texto);
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--noche);
+  background: var(--sol);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulo);
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+  line-height: 1.08;
+}
+
+h3 {
+  margin: 1.25rem 0 .4rem;
+  font-size: 1.6rem;
+  line-height: 1.15;
+}
+
+/* ---------- Botones ---------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: .7rem 1.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--girasol);
+  color: var(--noche);
+  font: 700 1.05rem/1 var(--fuente-texto);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s ease, background-color .18s ease;
+}
+.boton:hover { background: var(--mantequilla); transform: translateY(-2px); }
+.boton:active { transform: translateY(0); }
+.boton:focus-visible { outline: 3px solid var(--mantequilla); outline-offset: 3px; }
+
+.boton--suave {
+  background: transparent;
+  color: var(--mantequilla);
+  box-shadow: inset 0 0 0 2px rgba(255, 229, 138, .6);
+}
+.boton--suave:hover { background: rgba(255, 229, 138, .14); }
+
+/* =====================================================
+   PORTADA
+   ===================================================== */
+.hero {
+  --alto: max(100svh, 700px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: var(--alto);
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  padding: clamp(3rem, 11svh, 7rem) 1.25rem 0;
+  text-align: center;
+  color: var(--texto-claro);
+  background:
+    radial-gradient(70% 50% at 50% 100%, rgba(255, 198, 41, .30), transparent 70%),
+    linear-gradient(180deg, var(--noche) 0%, var(--bosque) 58%, var(--musgo) 100%);
+  cursor: pointer;
+}
+
+/* Brillo del amanecer */
+.sol {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 2%;
+  width: min(80vmin, 640px);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(255, 214, 90, .50) 0,
+    rgba(255, 198, 41, .22) 36%,
+    transparent 68%);
+  animation: amanecer 3.4s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+@keyframes amanecer {
+  from { transform: translateY(65%); opacity: 0; }
+}
+
+/* Colinas */
+.colinas {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  display: block;
+  pointer-events: none;
+}
+.colinas--fondo  { z-index: 1; height: clamp(120px, 20svh, 220px); }
+.colinas--fondo path { fill: var(--colina-fondo); }
+.colinas--frente { z-index: 3; height: clamp(90px, 15svh, 170px); }
+.colinas--frente path { fill: var(--colina-frente); }
+
+/* Jardín y canvas */
+.jardin {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.polen {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Texto de la portada */
+.hero__texto {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  max-width: 60rem;
+  animation: encender 1.8s ease-out .7s both;
+}
+
+@keyframes encender {
+  from { opacity: 0; filter: blur(8px); transform: translateY(10px); }
+}
+
+.hero__fecha {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--mantequilla);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 8.6vw, 6rem);
+  line-height: 1.02;
+  color: var(--girasol);
+  text-shadow: 0 0 44px rgba(255, 198, 41, .35);
+}
+.hero h1 .linea { display: block; }
+
+.hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .75rem;
+  margin-top: .5rem;
+}
+
+/* Dedicatoria (aparece cuando el enlace trae mensaje) */
+.dedicatoria {
+  display: grid;
+  gap: .35rem;
+  max-width: 36rem;
+  margin-top: .5rem;
+  padding: 1rem 1.4rem;
+  border-radius: 1rem;
+  background: rgba(255, 246, 216, .09);
+  backdrop-filter: blur(4px);
+  cursor: default;
+}
+.dedicatoria p { margin: 0; }
+.dedicatoria p:empty { display: none; }
+.ded__para { font-size: 1.2rem; font-weight: 700; color: var(--mantequilla); }
+.ded__msg  { font-size: 1.2rem; font-style: italic; line-height: 1.5; text-wrap: pretty; }
+.ded__msg:not(:empty)::before { content: '«'; }
+.ded__msg:not(:empty)::after  { content: '»'; }
+.ded__de   { font-size: 1rem; color: rgba(255, 246, 216, .8); }
+
+/* =====================================================
+   FLORES (generadas por script.js)
+   El estado base es la flor ya abierta; las animaciones
+   solo parten "desde" cero, así que si el usuario pide
+   menos movimiento, la flor simplemente aparece completa.
+   ===================================================== */
+.flor {
+  display: block;
+  height: calc(var(--e, 1) * var(--alto, 100svh) * .44);
+  aspect-ratio: 200 / 420;
+}
+
+.jardin .flor {
+  position: absolute;
+  bottom: 3svh;
+  transform: translateX(-50%);
+}
+
+.flor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 100%;
+  animation: mecer var(--t, 5s) ease-in-out var(--m, 0s) infinite alternate;
+}
+
+@keyframes mecer {
+  from { transform: rotate(-1.6deg); }
+  to   { transform: rotate(1.6deg); }
+}
+
+/* Colores por tipo de flor */
+.flor--girasol   { --p1: #FFC629; --p2: #F0A30A; --borde: #D98E00; }
+.flor--margarita { --p1: #FFE45C; --p2: #FFC933; --borde: #E5A800; }
+.flor--tulipan   { --p1: #FFCB2E; --p2: #F2A20F; --borde: #D68A00; }
+
+.tallo {
+  fill: none;
+  stroke: var(--c-tallo, #55B67E);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.hoja  { fill: var(--c-hoja, #3F9D6A); transform-origin: 0 0; }
+.vena  { fill: none; stroke: rgba(230, 255, 238, .45); stroke-width: 1.5; stroke-linecap: round; transform-origin: 0 0; }
+
+.petalo { transform-origin: 0 0; stroke: var(--borde); stroke-width: 1.2; stroke-linejoin: round; }
+.petalo--frente { fill: var(--p1); }
+.petalo--atras  { fill: var(--p2); }
+
+.cabeza { transform-origin: 0 0; }
+.cabeza--tulipan { transform-origin: 0 34px; }
+.cabeza--tulipan .petalo { transform-origin: 0 34px; }
+.centro { transform-origin: 0 0; }
+
+/* Animaciones de nacimiento */
+.flor.brota .tallo {
+  animation: crecer 1.7s cubic-bezier(.3, .7, .2, 1) var(--d, 0s) both;
+}
+.flor.brota .hoja,
+.flor.brota .vena {
+  animation: abrir .9s cubic-bezier(.2, 1.2, .4, 1)
+    calc(var(--d, 0s) + .6s + var(--k, 0) * .35s) both;
+}
+.flor.brota .cabeza {
+  animation: brotar 1.1s cubic-bezier(.2, 1.35, .4, 1) calc(var(--d, 0s) + 1.25s) both;
+}
+.flor.brota .petalo {
+  animation: abrir 1s cubic-bezier(.2, 1.3, .4, 1)
+    calc(var(--d, 0s) + 1.35s + var(--r, 0s)) both;
+}
+.flor.brota .centro {
+  animation: abrir .8s cubic-bezier(.2, 1.3, .4, 1) calc(var(--d, 0s) + 1.3s) both;
+}
+
+@keyframes crecer { from { stroke-dashoffset: 1; } }
+@keyframes abrir  { from { transform: scale(0); } }
+@keyframes brotar { from { transform: scale(.2) rotate(-30deg); opacity: 0; } }
+
+.flor.oculta { visibility: hidden; }
+
+/* =====================================================
+   SECCIONES CLARAS
+   ===================================================== */
+.seccion { padding: clamp(4rem, 10vw, 8rem) 1.25rem; }
+
+.contenedor {
+  width: min(100%, 68rem);
+  margin-inline: auto;
+}
+
+/* --- Por qué amarillo --- */
+.porque { background: var(--sol); }
+.porque .contenedor {
+  display: grid;
+  gap: 2rem 4rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+.porque p { max-width: 34rem; margin: 0 0 1.1em; }
+.porque p:last-child { margin-bottom: 0; }
+
+@media (min-width: 52rem) {
+  .porque .contenedor {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: start;
+  }
+}
+
+/* --- Tres flores --- */
+.flores {
+  --c-tallo: #2E7D57;
+  --c-hoja: #2A8A58;
+  background: var(--menta);
+}
+
+.flores__lista {
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 3.5rem 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+.flores__item p { margin: 0; max-width: 26rem; }
+
+.vitrina {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+.vitrina .flor {
+  --e: 1;
+  height: 290px;
+  margin-inline: auto;
+}
+.vitrina::after {           /* montículo de tierra */
+  content: '';
+  display: block;
+  width: 55%;
+  height: 12px;
+  margin: -6px auto 0;
+  border-radius: 50%;
+  background: rgba(11, 37, 48, .2);
+}
+.vitrina:focus-visible { outline: 3px solid var(--noche); outline-offset: 4px; }
+
+/* --- Regala una flor --- */
+.regalo {
+  background: var(--noche);
+  color: var(--texto-claro);
+}
+.regalo h2 { color: var(--girasol); }
+.regalo .contenedor {
+  display: grid;
+  gap: 2.5rem 4rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+.regalo__intro p { max-width: 26rem; margin: 1rem 0 0; }
+
+@media (min-width: 52rem) {
+  .regalo .contenedor {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: start;
+  }
+}
+
+.formulario { display: grid; gap: 1.2rem; }
+
+.fila {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+
+.campo {
+  display: grid;
+  gap: .4rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.campo label,
+.campo legend {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--mantequilla);
+}
+.campo legend { margin-bottom: .5rem; }
+
+.campo input[type='text'],
+.campo textarea {
+  width: 100%;
+  padding: .8rem 1rem;
+  font: inherit;
+  color: var(--texto-claro);
+  background: rgba(255, 246, 216, .07);
+  border: 1.5px solid rgba(255, 229, 138, .35);
+  border-radius: .75rem;
+}
+.campo textarea { min-height: 7rem; resize: vertical; }
+.campo input::placeholder,
+.campo textarea::placeholder { color: rgba(255, 246, 216, .45); }
+.campo input:focus-visible,
+.campo textarea:focus-visible {
+  outline: 3px solid var(--girasol);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+.contador {
+  justify-self: end;
+  font-size: .9rem;
+  color: rgba(255, 246, 216, .65);
+}
+
+.opciones { display: flex; flex-wrap: wrap; gap: .6rem; }
+.opcion { position: relative; }
+.opcion input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.opcion span {
+  display: inline-flex;
+  padding: .55rem 1.1rem;
+  border: 1.5px solid rgba(255, 229, 138, .45);
+  border-radius: 999px;
+  transition: background-color .18s ease, color .18s ease;
+}
+.opcion input:checked + span {
+  background: var(--girasol);
+  border-color: var(--girasol);
+  color: var(--noche);
+  font-weight: 700;
+}
+.opcion input:focus-visible + span { outline: 3px solid var(--mantequilla); outline-offset: 2px; }
+
+.formulario .boton { justify-self: start; }
+
+.estado {
+  min-height: 1.5em;
+  margin: 1rem 0 0;
+  font-size: .98rem;
+  color: var(--mantequilla);
+}
+
+.resultado {
+  display: grid;
+  gap: .7rem;
+  margin-top: .5rem;
+  padding: 1.25rem;
+  border: 1.5px solid rgba(255, 229, 138, .3);
+  border-radius: 1rem;
+  background: rgba(255, 229, 138, .07);
+}
+.resultado label { font-weight: 600; color: var(--mantequilla); }
+.resultado input {
+  width: 100%;
+  padding: .7rem .9rem;
+  font: inherit;
+  font-size: .95rem;
+  color: inherit;
+  text-overflow: ellipsis;
+  background: rgba(0, 0, 0, .25);
+  border: 1px solid rgba(255, 229, 138, .3);
+  border-radius: .6rem;
+}
+.resultado input:focus-visible { outline: 3px solid var(--girasol); outline-offset: 2px; }
+.acciones { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .3rem; }
+
+/* --- Pie --- */
+.pie {
+  padding: 2rem 1.25rem 3rem;
+  text-align: center;
+  font-size: .95rem;
+  color: rgba(255, 246, 216, .75);
+  background: var(--noche);
+  border-top: 1px solid rgba(255, 229, 138, .15);
+}
+.pie p { margin: 0; }
+
+/* =====================================================
+   Menos movimiento: todo aparece ya terminado
+   ===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
